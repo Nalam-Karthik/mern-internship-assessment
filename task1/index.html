@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Customer Satisfaction Survey</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: Arial, sans-serif;
+      background: #fff;
+      padding: 30px 20px;
+      color: #333;
+      max-width: 650px;
+    }
+
+    .field-group { margin-bottom: 16px; }
+
+    .field-group label {
+      display: block;
+      font-weight: 700;
+      margin-bottom: 5px;
+      font-size: 0.95rem;
+    }
+    .req { color: #c0392b; }
+
+    /* Name row */
+    .name-row { display: flex; gap: 12px; }
+    .name-row .sub-field { flex: 1; }
+    .name-row small { display: block; font-size: 0.78rem; color: #555; margin-top: 3px; }
+
+    input[type="text"],
+    input[type="email"] {
+      width: 100%;
+      padding: 7px 9px;
+      border: 1px solid #bbb;
+      border-radius: 3px;
+      font-size: 0.92rem;
+    }
+
+    /* Star Rating */
+    .stars { display: flex; gap: 3px; margin-bottom: 5px; }
+    .stars span { font-size: 2rem; color: #e07b39; }
+    .stars span.empty { color: #ddd; }
+    .rating-sub { font-size: 0.82rem; color: #555; }
+
+    /* Radio Grid */
+    .grid-label {
+      font-weight: 700;
+      font-size: 0.95rem;
+      margin-bottom: 6px;
+    }
+    .req-inline { color: #c0392b; }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.85rem;
+    }
+    thead th {
+      text-align: center;
+      font-weight: 600;
+      color: #444;
+      padding: 5px 4px;
+      font-size: 0.78rem;
+    }
+    thead th:first-child { text-align: left; }
+    tbody td {
+      text-align: center;
+      padding: 9px 4px;
+      border-top: 1px solid #eee;
+    }
+    tbody td:first-child { text-align: left; color: #333; font-size: 0.88rem; }
+    tbody tr:nth-child(even) { background: #f7f7f7; }
+    input[type="radio"] {
+      width: 16px; height: 16px;
+      cursor: pointer;
+      accent-color: #555;
+    }
+
+    .section-gap { margin-top: 24px; }
+  </style>
+</head>
+<body>
+
+<form action="#" method="post">
+
+  <!-- Name -->
+  <div class="field-group">
+    <label>Name <span class="req">*</span></label>
+    <div class="name-row">
+      <div class="sub-field">
+        <input type="text" name="first_name" />
+        <small>First</small>
+      </div>
+      <div class="sub-field">
+        <input type="text" name="last_name" />
+        <small>Last</small>
+      </div>
+    </div>
+  </div>
+
+  <!-- Email -->
+  <div class="field-group">
+    <label>Email <span class="req">*</span></label>
+    <input type="email" name="email" />
+  </div>
+
+  <!-- Star Rating -->
+  <div class="field-group">
+    <label>Your Experience <span class="req">*</span></label>
+    <div class="stars">
+      <span>&#9733;</span>
+      <span>&#9733;</span>
+      <span>&#9733;</span>
+      <span>&#9733;</span>
+      <span class="empty">&#9733;</span>
+    </div>
+    <div class="rating-sub">Overall, how would you rate your experience with us?</div>
+  </div>
+
+  <!-- Satisfaction Grid -->
+  <div class="section-gap">
+    <div class="grid-label">How satisfied are you with <span class="req-inline">*</span></div>
+    <table>
+      <thead>
+        <tr>
+          <th></th>
+          <th>Very Unsatisfied</th>
+          <th>Unsatisfied</th>
+          <th>Neutral</th>
+          <th>Satisfied</th>
+          <th>Very Satisfied</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Purchase</td>
+          <td><input type="radio" name="sat_purchase" value="1"></td>
+          <td><input type="radio" name="sat_purchase" value="2"></td>
+          <td><input type="radio" name="sat_purchase" value="3"></td>
+          <td><input type="radio" name="sat_purchase" value="4"></td>
+          <td><input type="radio" name="sat_purchase" value="5"></td>
+        </tr>
+        <tr>
+          <td>Service</td>
+          <td><input type="radio" name="sat_service" value="1"></td>
+          <td><input type="radio" name="sat_service" value="2"></td>
+          <td><input type="radio" name="sat_service" value="3"></td>
+          <td><input type="radio" name="sat_service" value="4"></td>
+          <td><input type="radio" name="sat_service" value="5"></td>
+        </tr>
+        <tr>
+          <td>Company Overall</td>
+          <td><input type="radio" name="sat_company" value="1"></td>
+          <td><input type="radio" name="sat_company" value="2"></td>
+          <td><input type="radio" name="sat_company" value="3"></td>
+          <td><input type="radio" name="sat_company" value="4"></td>
+          <td><input type="radio" name="sat_company" value="5"></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Likelihood Grid -->
+  <div class="section-gap">
+    <div class="grid-label">How likely are you to <span class="req-inline">*</span></div>
+    <table>
+      <thead>
+        <tr>
+          <th></th>
+          <th>Very Unlikely</th>
+          <th>Unlikely</th>
+          <th>Neutral</th>
+          <th>Likely</th>
+          <th>Very Likely</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Buy from us again</td>
+          <td><input type="radio" name="like_buy" value="1"></td>
+          <td><input type="radio" name="like_buy" value="2"></td>
+          <td><input type="radio" name="like_buy" value="3"></td>
+          <td><input type="radio" name="like_buy" value="4"></td>
+          <td><input type="radio" name="like_buy" value="5"></td>
+        </tr>
+        <tr>
+          <td>Recommend our product to others</td>
+          <td><input type="radio" name="like_product" value="1"></td>
+          <td><input type="radio" name="like_product" value="2"></td>
+          <td><input type="radio" name="like_product" value="3"></td>
+          <td><input type="radio" name="like_product" value="4"></td>
+          <td><input type="radio" name="like_product" value="5"></td>
+        </tr>
+        <tr>
+          <td>Recommend our company to others</td>
+          <td><input type="radio" name="like_company" value="1"></td>
+          <td><input type="radio" name="like_company" value="2"></td>
+          <td><input type="radio" name="like_company" value="3"></td>
+          <td><input type="radio" name="like_company" value="4"></td>
+          <td><input type="radio" name="like_company" value="5"></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+</form>
+</body>
+</html>

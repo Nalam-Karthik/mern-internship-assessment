@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ABC Training Institute</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: Arial, sans-serif; }
+
+    /* ── NAVBAR ── */
+    nav {
+      background: #1a2744;
+      display: flex;
+      align-items: center;
+      padding: 0 18px;
+      height: 50px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .nav-brand {
+      color: #fff;
+      font-weight: 700;
+      font-size: 1rem;
+      flex: 1;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .nav-links { display: flex; list-style: none; gap: 2px; }
+    .nav-links a {
+      color: #ccd6f6;
+      text-decoration: none;
+      padding: 7px 14px;
+      border-radius: 3px;
+      font-size: 0.88rem;
+      font-weight: 500;
+    }
+    .nav-links a:hover,
+    .nav-links a.active { background: #243560; color: #fff; }
+
+    /* ── PAGE SECTIONS ── */
+    .page { display: none; }
+    .page.active { display: block; }
+
+    /* ════════════════════════
+       HOME
+    ════════════════════════ */
+    .home-banner {
+      background: #1a2744;
+      color: #fff;
+      text-align: center;
+      padding: 50px 20px 30px;
+    }
+    .home-banner h1 { font-size: 1.7rem; font-weight: 800; margin-bottom: 8px; }
+    .home-banner p  { font-size: 0.95rem; color: #aab8db; margin-bottom: 28px; }
+
+    /* video placeholder box */
+    .video-box {
+      max-width: 580px;
+      margin: 0 auto 20px;
+      border-radius: 6px;
+      overflow: hidden;
+      box-shadow: 0 6px 24px rgba(0,0,0,0.4);
+    }
+    .video-thumb {
+      width: 100%;
+      height: 260px;
+      background: linear-gradient(135deg, #243560, #0f1a36);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+    .video-thumb span {
+      font-size: 2.8rem;
+      font-weight: 900;
+      color: #fff;
+      text-align: center;
+      line-height: 1.15;
+      letter-spacing: 2px;
+    }
+    .vbar {
+      background: #111;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 12px;
+    }
+    .vbar button {
+      background: none; border: none;
+      color: #fff; font-size: 1rem; cursor: pointer;
+    }
+    .vbar .track {
+      flex: 1; height: 4px;
+      background: #444; border-radius: 2px;
+    }
+    .vbar .fill { width: 28%; height: 100%; background: #c0392b; border-radius: 2px; }
+
+    /* HTML5 video & audio */
+    .media-row {
+      background: #111c38;
+      padding: 18px 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 14px;
+    }
+    .media-row p { color: #aab8db; font-size: 0.85rem; }
+    video, audio { width: 100%; max-width: 560px; border-radius: 4px; }
+
+    /* ════════════════════════
+       COURSES
+    ════════════════════════ */
+    .courses-page {
+      background: #1a2744;
+      min-height: calc(100vh - 50px);
+      padding: 44px 24px;
+      color: #fff;
+    }
+    .courses-page h2 {
+      text-align: center;
+      font-size: 1.65rem;
+      margin-bottom: 32px;
+    }
+
+    .courses-img-bar {
+      max-width: 760px;
+      margin: 0 auto 30px;
+      height: 180px;
+      background: linear-gradient(90deg, #1a3a6a, #243560);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 30px;
+    }
+    .courses-img-bar .icon { font-size: 5rem; opacity: 0.6; }
+    .courses-img-bar p { color: #aab8db; max-width: 180px; font-size: 0.88rem; }
+
+    .courses-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      max-width: 760px;
+      margin: 0 auto 28px;
+    }
+    .course-card {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 7px;
+      padding: 18px 22px;
+    }
+    .course-card h3 { font-size: 0.95rem; font-weight: 700; color: #e8c96a; margin-bottom: 10px; }
+    .course-card ul  { list-style: disc; padding-left: 18px; color: #ccd6f6; }
+    .course-card ul li { margin-bottom: 5px; font-size: 0.88rem; }
+
+    .learning-tracks {
+      max-width: 760px;
+      margin: 0 auto;
+      background: rgba(255,255,255,0.05);
+      border-radius: 7px;
+      padding: 18px 22px;
+      color: #ccd6f6;
+    }
+    .learning-tracks h3 { color: #e8c96a; margin-bottom: 10px; font-size: 0.95rem; }
+    .learning-tracks ol { padding-left: 20px; line-height: 1.95; font-size: 0.88rem; }
+
+    /* ════════════════════════
+       SCHEDULE
+    ════════════════════════ */
+    .schedule-page {
+      min-height: calc(100vh - 50px);
+      background: #5a3e2b;
+      padding: 44px 24px;
+      color: #fff;
+    }
+    .schedule-page h2 { text-align: center; font-size: 1.65rem; margin-bottom: 6px; }
+    .divider {
+      width: 55px; height: 3px;
+      background: #c0392b;
+      margin: 0 auto 28px;
+      border-radius: 2px;
+    }
+    .sched-table {
+      width: 100%; max-width: 680px;
+      margin: 0 auto;
+      border-collapse: collapse;
+      border-radius: 7px;
+      overflow: hidden;
+    }
+    .sched-table thead tr { background: #c0392b; }
+    .sched-table thead th {
+      padding: 13px 16px;
+      text-align: left;
+      font-size: 0.92rem;
+      color: #fff;
+    }
+    .sched-table tbody tr { border-bottom: 1px solid rgba(255,255,255,0.08); }
+    .sched-table tbody tr:nth-child(odd)  { background: rgba(255,255,255,0.06); }
+    .sched-table tbody tr:nth-child(even) { background: rgba(0,0,0,0.15); }
+    .sched-table tbody td {
+      padding: 13px 16px;
+      font-size: 0.9rem;
+      color: #e0e8ff;
+    }
+
+    /* ════════════════════════
+       REGISTER
+    ════════════════════════ */
+    .register-page {
+      background: #1a2744;
+      min-height: calc(100vh - 50px);
+      padding: 44px 24px;
+      color: #fff;
+    }
+    .register-page h2 { text-align: center; font-size: 1.65rem; margin-bottom: 28px; }
+
+    .reg-box {
+      max-width: 480px;
+      margin: 0 auto;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 8px;
+      padding: 28px 32px;
+    }
+    .reg-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+    .reg-row label {
+      width: 115px;
+      font-size: 0.88rem;
+      color: #ccd6f6;
+      flex-shrink: 0;
+    }
+    .reg-row input[type="text"],
+    .reg-row input[type="email"],
+    .reg-row input[type="tel"],
+    .reg-row select,
+    .reg-row textarea {
+      flex: 1;
+      padding: 7px 9px;
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 3px;
+      background: rgba(255,255,255,0.08);
+      color: #fff;
+      font-size: 0.88rem;
+      outline: none;
+    }
+    .reg-row input:focus,
+    .reg-row select:focus,
+    .reg-row textarea:focus { border-color: #e8c96a; }
+    .reg-row select option { background: #1a2744; }
+    .reg-row textarea { resize: vertical; min-height: 75px; }
+
+    .gender-options { display: flex; gap: 18px; }
+    .gender-options label {
+      display: flex; align-items: center; gap: 5px;
+      cursor: pointer; font-size: 0.88rem; width: auto;
+      color: #ccd6f6;
+    }
+    .gender-options input[type="radio"] { accent-color: #e8c96a; }
+
+    .reg-btn {
+      display: block;
+      width: 100%;
+      background: #c0392b;
+      color: #fff;
+      border: none;
+      padding: 12px;
+      font-size: 0.98rem;
+      font-weight: 700;
+      border-radius: 4px;
+      cursor: pointer;
+      margin-top: 18px;
+      letter-spacing: 0.4px;
+    }
+    .reg-btn:hover { background: #a93226; }
+  </style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav>
+  <div class="nav-brand">&#9776; ABC Training Institute</div>
+  <ul class="nav-links">
+    <li><a href="#" class="active" onclick="return show('home',this)">Home</a></li>
+    <li><a href="#" onclick="return show('courses',this)">Courses</a></li>
+    <li><a href="#" onclick="return show('schedule',this)">Schedule</a></li>
+    <li><a href="#" onclick="return show('register',this)">Register</a></li>
+  </ul>
+</nav>
+
+<!-- ══════════════ HOME ══════════════ -->
+<div id="home" class="page active">
+
+  <div class="home-banner">
+    <h1>Welcome to ABC Training Institute</h1>
+    <p>Empowering Your Future with Quality Education</p>
+
+    <!-- Video placeholder UI -->
+    <div class="video-box">
+      <div class="video-thumb">
+        <span>LEARN TO<br>CODE</span>
+      </div>
+      <div class="vbar">
+        <button>&#9654;</button>
+        <div class="track"><div class="fill"></div></div>
+        <button>&#9654;&#9654;</button>
+        <button>&#9670;</button>
+        <button>&#10066;</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- HTML5 Media Tags -->
+  <div class="media-row">
+    <p>&#127909; Course Preview Video</p>
+    <video controls>
+      <source src="course-preview.mp4" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
+
+    <p>&#127925; Institute Audio Promo</p>
+    <audio controls>
+      <source src="promo.mp3" type="audio/mpeg">
+      Your browser does not support the audio element.
+    </audio>
+  </div>
+
+</div>
+
+<!-- ══════════════ COURSES ══════════════ -->
+<div id="courses" class="page">
+  <div class="courses-page">
+    <h2>Our Courses</h2>
+
+    <div class="courses-img-bar">
+      <div class="icon">&#128187;</div>
+      <p>Build real-world skills with expert-led courses</p>
+      <div class="icon">&#128218;</div>
+    </div>
+
+    <div class="courses-grid">
+      <div class="course-card">
+        <h3>Web Development:</h3>
+        <ul>
+          <li>HTML &amp; CSS</li>
+          <li>JavaScript</li>
+          <li>React JS</li>
+        </ul>
+      </div>
+      <div class="course-card">
+        <h3>Programming Languages:</h3>
+        <ul>
+          <li>Python</li>
+          <li>Java</li>
+          <li>C++</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="learning-tracks">
+      <h3>Learning Tracks (in order):</h3>
+      <ol>
+        <li>Beginner – Fundamentals &amp; Basics</li>
+        <li>Intermediate – Frameworks &amp; Libraries</li>
+        <li>Advanced – Full Stack &amp; System Design</li>
+        <li>Expert – Cloud Deployment &amp; DevOps</li>
+      </ol>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ SCHEDULE ══════════════ -->
+<div id="schedule" class="page">
+  <div class="schedule-page">
+    <h2>Course Schedule</h2>
+    <div class="divider"></div>
+
+    <table class="sched-table">
+      <thead>
+        <tr>
+          <th>Course</th>
+          <th>Trainer</th>
+          <th>Duration</th>
+          <th>Mode</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>HTML &amp; CSS</td><td>Ashoka</td><td>2 Weeks</td><td>Online</td></tr>
+        <tr><td>Java</td><td>Ms. Rahul</td><td>4 Weeks</td><td>Offline</td></tr>
+        <tr><td>React JS</td><td>Mr. Anita</td><td>3 Weeks</td><td>Online</td></tr>
+        <tr><td>Python</td><td>Mr. Kumar</td><td>3 Weeks</td><td>Online</td></tr>
+        <tr><td>C++</td><td>Ms. Priya</td><td>4 Weeks</td><td>Offline</td></tr>
+        <tr><td>JavaScript</td><td>Mr. Dev</td><td>2 Weeks</td><td>Online</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ══════════════ REGISTER ══════════════ -->
+<div id="register" class="page">
+  <div class="register-page">
+    <h2>Student Registration</h2>
+
+    <div class="reg-box">
+      <form action="#" method="post">
+
+        <div class="reg-row">
+          <label for="r-name">Name:</label>
+          <input type="text" id="r-name" name="name" />
+        </div>
+
+        <div class="reg-row">
+          <label for="r-email">Email:</label>
+          <input type="email" id="r-email" name="email" />
+        </div>
+
+        <div class="reg-row">
+          <label for="r-phone">Phone:</label>
+          <input type="tel" id="r-phone" name="phone" />
+        </div>
+
+        <div class="reg-row">
+          <label for="r-course">Select Course:</label>
+          <select id="r-course" name="course">
+            <option value="html_css">HTML &amp; CSS</option>
+            <option value="js">JavaScript</option>
+            <option value="react">React JS</option>
+            <option value="python">Python</option>
+            <option value="java">Java</option>
+            <option value="cpp">C++</option>
+          </select>
+        </div>
+
+        <div class="reg-row">
+          <label>Gender:</label>
+          <div class="gender-options">
+            <label><input type="radio" name="gender" value="male"> Male</label>
+            <label><input type="radio" name="gender" value="female"> Female</label>
+          </div>
+        </div>
+
+        <div class="reg-row">
+          <label for="r-msg">Message:</label>
+          <textarea id="r-msg" name="message"></textarea>
+        </div>
+
+        <button type="submit" class="reg-btn">Register Now</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script>
+  function show(pageId, link) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+    document.getElementById(pageId).classList.add('active');
+    link.classList.add('active');
+    return false;
+  }
+</script>
+
+</body>
+</html>

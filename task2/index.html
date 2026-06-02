@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>User Personal Information</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: Arial, sans-serif;
+      background: #f0f0f0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 30px 16px;
+    }
+
+    form {
+      background: #fff;
+      padding: 6px;
+    }
+
+    fieldset {
+      border: 1px solid #888;
+      padding: 18px 20px 22px;
+      width: 340px;
+    }
+
+    legend {
+      font-size: 0.95rem;
+      font-weight: 700;
+      padding: 0 6px;
+      color: #222;
+    }
+
+    .field-group {
+      margin-bottom: 13px;
+    }
+
+    .field-group label {
+      display: block;
+      font-size: 0.88rem;
+      color: #222;
+      margin-bottom: 4px;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="password"],
+    input[type="date"],
+    textarea {
+      width: 100%;
+      padding: 6px 8px;
+      border: 1px solid #bbb;
+      border-radius: 3px;
+      font-size: 0.88rem;
+      background: #e8eaf0;
+      color: #333;
+      outline: none;
+    }
+    input:focus, textarea:focus {
+      border-color: #666;
+      background: #fff;
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 60px;
+    }
+
+    .radio-group {
+      display: flex;
+      gap: 16px;
+      margin-top: 3px;
+      flex-wrap: wrap;
+    }
+    .radio-group label {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 0.88rem;
+      cursor: pointer;
+      margin-bottom: 0;
+    }
+    .radio-group input[type="radio"] {
+      accent-color: #27ae60;
+      width: 14px;
+      height: 14px;
+    }
+
+    .submit-btn {
+      background: #f0f0f0;
+      border: 2px solid #888;
+      padding: 7px 22px;
+      font-size: 0.9rem;
+      border-radius: 3px;
+      cursor: pointer;
+      margin-top: 6px;
+    }
+    .submit-btn:hover {
+      background: #ddd;
+    }
+  </style>
+</head>
+<body>
+
+<form action="#" method="post">
+  <fieldset>
+    <legend>User personal information</legend>
+
+    <div class="field-group">
+      <label>Enter your full name</label>
+      <input type="text" name="fullname" value="Rahul Kumar" />
+    </div>
+
+    <div class="field-group">
+      <label>Enter your email</label>
+      <input type="email" name="email" value="geeks@12345gmail.com" />
+    </div>
+
+    <div class="field-group">
+      <label>Enter your password</label>
+      <input type="password" name="password" />
+    </div>
+
+    <div class="field-group">
+      <label>Confirm your password</label>
+      <input type="password" name="confirm_password" />
+    </div>
+
+    <div class="field-group">
+      <label>Enter your gender</label>
+      <div class="radio-group">
+        <label><input type="radio" name="gender" value="male" checked> Male</label>
+        <label><input type="radio" name="gender" value="female"> Female</label>
+        <label><input type="radio" name="gender" value="others"> Others</label>
+      </div>
+    </div>
+
+    <div class="field-group">
+      <label>Enter your Date of Birth</label>
+      <input type="date" name="dob" value="2009-06-10" />
+    </div>
+
+    <div class="field-group">
+      <label>Enter your Address:</label>
+      <textarea name="address">Noida Sector 137</textarea>
+    </div>
+
+    <button type="submit" class="submit-btn">submit</button>
+  </fieldset>
+</form>
+
+</body>
+</html>
