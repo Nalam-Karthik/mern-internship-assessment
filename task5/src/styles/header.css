@@ -1,0 +1,41 @@
+:root {
+  --bar-color: #e12121;
+  --link-color: #a8c4eb;
+  --link-hover: #4f46e5;
+  --bar-height: 60px;
+}
+
+.site-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: var(--bar-color);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  font-family: Arial, sans-serif;
+  z-index: 10;
+}
+
+.nav-list {
+  list-style: none;
+  margin: 0;
+  padding: 0 20px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 25px;
+  height: var(--bar-height);
+}
+
+.nav-item {
+  color: var(--link-color);
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  padding: 5px 0;
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.nav-item:hover {
+  color: var(--link-hover);
+}
