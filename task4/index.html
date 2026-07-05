@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>User Directory</title>
+<style>
+  :root{
+    --bg:#f5f1ea;
+    --card:#ffffff;
+    --border:#e4ddd0;
+    --accent:#8a6d3b;
+    --text:#2b2620;
+    --muted:#8a8074;
+    --shadow: 0 2px 10px rgba(43,38,32,0.07);
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background:var(--bg);
+    color:var(--text);
+    padding:32px 24px 64px;
+  }
+  header{
+    max-width:1200px;
+    margin:0 auto 28px;
+  }
+  header h1{
+    margin:0 0 4px;
+    font-size:1.8rem;
+  }
+  header p{
+    margin:0;
+    color:var(--muted);
+  }
+  #status{
+    max-width:1200px;
+    margin:0 auto 20px;
+    color:var(--muted);
+  }
+  #status.error{
+    color:#a3341c;
+  }
+  #grid{
+    max-width:1200px;
+    margin:0 auto;
+    display:grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap:20px;
+  }
+  .card{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:12px;
+    padding:18px;
+    box-shadow:var(--shadow);
+    transition: transform .15s ease, box-shadow .15s ease;
+  }
+  .card:hover{
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(43,38,32,0.12);
+  }
+  .card-head{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    margin-bottom:12px;
+    padding-bottom:12px;
+    border-bottom:1px solid var(--border);
+  }
+  .card-head img{
+    width:56px;
+    height:56px;
+    border-radius:50%;
+    object-fit:cover;
+    border:2px solid var(--accent);
+  }
+  .card-head h2{
+    margin:0;
+    font-size:1.05rem;
+  }
+  .card-head span{
+    font-size:.8rem;
+    color:var(--muted);
+  }
+  dl{
+    margin:0;
+    display:grid;
+    grid-template-columns: auto 1fr;
+    row-gap:6px;
+    column-gap:10px;
+    font-size:.88rem;
+  }
+  dt{
+    color:var(--muted);
+    font-weight:600;
+  }
+  dd{
+    margin:0;
+    word-break:break-word;
+  }
+  .skeleton{
+    height:150px;
+    border-radius:12px;
+    background: linear-gradient(90deg, var(--border) 25%, #f0ebe1 37%, var(--border) 63%);
+    background-size:400% 100%;
+    animation: shimmer 1.4s ease infinite;
+  }
+  @keyframes shimmer{
+    0%{background-position:100% 50%;}
+    100%{background-position:0 50%;}
+  }
+</style>
+</head>
+<body>
+
+  <header>
+    <h1>User Directory</h1>
+    <p>Live data pulled from the DummyJSON users API.</p>
+  </header>
+
+  <div id="status">Loading users…</div>
+  <div id="grid"></div>
+
+<script>
+  const grid = document.getElementById('grid');
+  const status = document.getElementById('status');
+
+  function renderSkeletons(count){
+    grid.innerHTML = '';
+    for(let i=0;i<count;i++){
+      const s = document.createElement('div');
+      s.className = 'skeleton';
+      grid.appendChild(s);
+    }
+  }
+
+  function buildCard(user){
+    const card = document.createElement('div');
+    card.className = 'card';
+
+    const head = document.createElement('div');
+    head.className = 'card-head';
+
+    const img = document.createElement('img');
+    img.src = user.image;
+    img.alt = `${user.firstName} ${user.lastName}`;
+    img.loading = 'lazy';
+
+    const nameWrap = document.createElement('div');
+    const name = document.createElement('h2');
+    name.textContent = `${user.firstName} ${user.lastName}`;
+    const idSpan = document.createElement('span');
+    idSpan.textContent = `ID #${user.id}`;
+    nameWrap.appendChild(name);
+    nameWrap.appendChild(idSpan);
+
+    head.appendChild(img);
+    head.appendChild(nameWrap);
+
+    const dl = document.createElement('dl');
+    const fields = [
+      ['Email', user.email],
+      ['Phone', user.phone],
+      ['Age', user.age],
+      ['Gender', user.gender],
+      ['Weight', `${user.weight} kg`],
+      ['Birth Date', user.birthDate],
+      ['University', user.university],
+      ['Address', `${user.address.address}, ${user.address.city}, ${user.address.state} ${user.address.postalCode}`],
+      ['Company', `${user.company.title} at ${user.company.name} (${user.company.department})`],
+      ['Company Address', `${user.company.address.address}, ${user.company.address.city}, ${user.company.address.state}, ${user.company.address.country}`]
+    ];
+
+    fields.forEach(([label, value]) => {
+      const dt = document.createElement('dt');
+      dt.textContent = label;
+      const dd = document.createElement('dd');
+      dd.textContent = value;
+      dl.appendChild(dt);
+      dl.appendChild(dd);
+    });
+
+    card.appendChild(head);
+    card.appendChild(dl);
+    return card;
+  }
+
+  async function loadUsers(){
+    renderSkeletons(6);
+    try{
+      const res = await fetch('https://dummyjson.com/users');
+      if(!res.ok) throw new Error(`Request failed with status ${res.status}`);
+      const data = await res.json();
+      const users = data.users || [];
+
+      grid.innerHTML = '';
+      if(users.length === 0){
+        status.textContent = 'No users found.';
+        return;
+      }
+
+      status.textContent = `Showing ${users.length} users`;
+      const fragment = document.createDocumentFragment();
+      users.forEach(user => fragment.appendChild(buildCard(user)));
+      grid.appendChild(fragment);
+
+    }catch(err){
+      console.error(err);
+      grid.innerHTML = '';
+      status.textContent = 'Could not load users. Please check your connection and try again.';
+      status.classList.add('error');
+    }
+  }
+
+  loadUsers();
+</script>
+</body>
+</html>
